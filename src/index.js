@@ -1,5 +1,5 @@
-import sliderOne from './modules/one'
-import sliderTwo from './modules/two'
+import one from './modules/timer'
+import two from './modules/two'
 
-sliderOne()
-sliderTwo()
+one('25 february 2022')
+two()
