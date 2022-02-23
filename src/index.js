@@ -1,5 +1,7 @@
 import one from './modules/timer'
-import two from './modules/two'
+import menu from './modules/menu'
+import modal from './modules/modal';
 
 one('25 february 2022')
-two()
+menu()
+modal()
