@@ -4,7 +4,7 @@ const menu = () => {
   const closeBtn = menu.querySelector('.close-btn')
   const menuItems = menu.querySelectorAll('ul>li>a')
   const scrollIcon = document.querySelector('main>a')
-  console.log(scrollIcon);
+
 
   const handleMenu = () => {
     menu.classList.toggle('active-menu');
@@ -27,7 +27,7 @@ const menu = () => {
   menuItems.forEach(item => item.addEventListener('click', (e) => {
     e.preventDefault();
     handleMenu()
-    scrollBlocks(item)
+    scrollBlocks(e.target);
   }));
 
 }
