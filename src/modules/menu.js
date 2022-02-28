@@ -1,10 +1,7 @@
 const menu = () => {
-  const menuBtn = document.querySelector('.menu')
   const menu = document.querySelector('menu')
-  const closeBtn = menu.querySelector('.close-btn')
-  const menuItems = menu.querySelectorAll('ul>li>a')
+  const main = document.querySelector('main');
   const scrollIcon = document.querySelector('main>a')
-
 
   const handleMenu = () => {
     menu.classList.toggle('active-menu');
@@ -17,18 +14,28 @@ const menu = () => {
     })
   }
 
-  menuBtn.addEventListener('click', handleMenu)
-  closeBtn.addEventListener('click', handleMenu)
-  scrollIcon.addEventListener('click', (e)=> {
-    e.preventDefault();
-    scrollBlocks(scrollIcon)
+  main.addEventListener('click', e => {
+    if(e.target.closest('a')) {
+      e.preventDefault();
+      scrollBlocks(scrollIcon)
+    } else if (e.target.closest('.menu')) {
+      handleMenu()
+    } 
   })
 
-  menuItems.forEach(item => item.addEventListener('click', (e) => {
-    e.preventDefault();
-    handleMenu()
-    scrollBlocks(e.target);
-  }));
+
+  menu.addEventListener('click', e => {
+    if(e.target.classList.contains('close-btn')) {
+      e.preventDefault();
+      handleMenu()
+    } else if (e.target.matches('li a')) {
+      e.preventDefault();
+      handleMenu()
+      scrollBlocks(e.target);
+    } 
+  })
+
+
 
 }
 
