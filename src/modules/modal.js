@@ -1,34 +1,42 @@
+import {animate} from './helpers'
+
 const modal = () => {
   const buttons = document.querySelectorAll('.popup-btn')
   const modal = document.querySelector('.popup')
   const modalContent = modal.querySelector('.popup-content')
   let documentWidth = document.documentElement.offsetWidth
-  let count = 0;
-  let animId;
 
-  function animModal () {
-    if (modal.style.display == 'block') {
-      count++
-      modalContent.style.left = count + '%'
-      animId = requestAnimationFrame(animModal);
-      if(count === 38) {
-        cancelAnimationFrame(animId)
-      }
+  function makeEaseOut(timing) {
+    return function(timeFraction) {
+      return 1 - timing(1 - timeFraction);
     }
   }
+
+  function circ(timeFraction) {
+    return 1 - Math.sin(Math.acos(timeFraction));
+  }
+
+  let ciricEaseOut = makeEaseOut(circ);
+
   buttons.forEach(btn => {
     btn.addEventListener('click', () => {
       modal.style.display = "block"
       if(documentWidth > 768) {
-        animModal();
+        animate({
+          duration: 1000,
+          timing: ciricEaseOut,
+          draw(progress) {
+            modalContent.style.left = (progress * 38) + '%';
+          }
+        });
       } 
     })
   });
 
   modal.addEventListener('click', e => {
     if(!e.target.closest('.popup-content') || e.target.classList.contains('popup-close')) {
+      
       modal.style.display = "none"
-      count = 0;
     }
   })
 

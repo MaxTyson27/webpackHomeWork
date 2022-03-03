@@ -1,3 +1,5 @@
+import { animate } from "./helpers"
+
 const calc = (price = 100) => {
   const calcBlock = document.querySelector('.calc-block')
   const calcType = document.querySelector('.calc-type')
@@ -13,21 +15,6 @@ const calc = (price = 100) => {
     let totalValue = 0
     let calcCountValue = 1
     let calcDayValue = 1
-
-    function animateNumbers (num, elem) {
-      let count = 0;
-      let interval = setInterval(() => {
-        if(num > count) {
-          count += 5
-          elem.textContent = count
-        } else if(count >= num) {
-          clearInterval(interval);
-          elem.textContent = count
-        } 
-        
-      },0.1)
-    }
-
 
     if(calcDay.value && calcDay.value < 5){
       calcDayValue = 2
@@ -45,10 +32,15 @@ const calc = (price = 100) => {
       totalValue = 0
     }
 
-    animateNumbers(totalValue, total);
-    
-
-
+    animate({
+      duration: 1000,
+      timing(timeFraction){
+        return timeFraction
+      },
+      draw(progress) {
+        total.textContent = Math.floor(progress * totalValue)     
+      }
+    });
   }
 
   calcBlock.addEventListener('input', e => {
