@@ -7,6 +7,7 @@ const calc = (price = 100) => {
   const calcCount = document.querySelector('.calc-count')
   const calcDay = document.querySelector('.calc-day')
   const total = document.getElementById('total')
+  let count = 0
 
   const coutCalc = () => {
     const calcTypeValue = +calcType.options[calcType.selectedIndex].value
@@ -38,7 +39,7 @@ const calc = (price = 100) => {
         return timeFraction
       },
       draw(progress) {
-        total.textContent = Math.floor(progress * totalValue)     
+        total.textContent = Math.floor(progress * totalValue)
       }
     });
   }
