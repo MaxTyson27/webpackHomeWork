@@ -19,9 +19,44 @@ const sendForm = ({ formId = [], someElem = [] }) => {
   }
 
   const validate = (list) => {
-    let success = true
+    let success = false
+    let bool = []
+
+    list.forEach(input => {
+      if(input.getAttribute('type') === 'text' ) {
+        if(/[^а-яёА-ЯЁ]+/g.test(input.value)) {
+          bool.push(false)
+        } else {
+          bool.push(true)
+        }
+      } else if(input.getAttribute('type') === 'email') {
+        if(/[^a-zA-z\d\@\-\.\!\~\*\']+/g.test(input.value) || input.value.length === 0) {
+          bool.push(false)
+        } else {
+          bool.push(true)
+        }
+      } else if(input.getAttribute('type') === 'tel') {
+        if(/[^\d]+/g.test(input.value)) {
+          bool.push(false)
+        } else {
+          bool.push(true)
+        }
+      }
+    });
 
 
+    const isBool = bool.every(item => {
+      if(item){
+        return true
+      } else {
+        return false
+      }
+    })
+
+    if(isBool){
+      success = true
+    }
+  
     return success
   }
 
@@ -61,6 +96,10 @@ const sendForm = ({ formId = [], someElem = [] }) => {
       .then(data => {
         statusBlock.textContent = successText
 
+        setTimeout(() =>{
+          statusBlock.textContent = ''
+        }, 4000)
+
         formElements.forEach(value => {
           value.value = ''
         });
@@ -70,6 +109,7 @@ const sendForm = ({ formId = [], someElem = [] }) => {
       })
     } else {
       console.log('Данные не верны');
+      statusBlock.textContent = errorText
     }
   }
 
