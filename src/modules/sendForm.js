@@ -36,7 +36,7 @@ const sendForm = ({ formId = [], someElem = [] }) => {
           bool.push(true)
         }
       } else if(input.getAttribute('type') === 'tel') {
-        if(/[^\d]+/g.test(input.value)) {
+        if(/[^\d\)\(\+)]+/g.test(input.value)) {
           bool.push(false)
         } else {
           bool.push(true)
@@ -85,7 +85,9 @@ const sendForm = ({ formId = [], someElem = [] }) => {
     someElem.forEach(elem => {
       const element = document.getElementById(elem.id)
       if(elem.type === 'block') {
-        formBody[elem.id] = element.textContent
+        if(+element.textContent > 0){
+          formBody[elem.id] = element.textContent
+        }
       } else if (elem.type === 'input') {
         formBody[elem.id] = element.value
       }
